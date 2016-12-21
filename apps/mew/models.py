@@ -4,9 +4,9 @@ from django.db import models
 
 # Create your models here.
 class Cat(models.Model):
-    name = models.Charfield(max_length = 100)
+    name = models.CharField(max_length = 100)
     color = models.CharField(max_length = 100)
-    fur = models.Charfield(max_length = 100)
+    fur = models.CharField(max_length = 100)
     glasses = models.BooleanField(default = False)
     scarf = models.BooleanField(default = False)
     hat = models.BooleanField(default = False)
