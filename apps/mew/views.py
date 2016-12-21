@@ -1,14 +1,40 @@
 from django.shortcuts import render
 from random import randint
+from .models import Player, Cat, Board
 
 # Create your views here.
-def index(request):
-    return render(request, "mew/index.html")
-
 def newgame(request):
-    player_choice = Cat.objects.get(id = request.POST['cat'])
-    opponent_choice = Cat.objects.get(id = randint(1,25))
-
+    request.session.flush()
+    Player.objects.all().delete()
+    Board.objects.all().delete()
+    if not Cat.objects.filter(name = "Kyle").exists():
+        Cat.objects.create(name = "Shadow", color = "black", fur = "plain")
+        Cat.objects.create(name = "Griffey", color = "black", fur ="plain", hat = True)
+        Cat.objects.create(name = "Louise", color = "black", fur ="striped", glasses = True)
+        Cat.objects.create(name = "Charles", color = "black", fur ="spotted")
+        Cat.objects.create(name = "Junior", color = "black", fur ="striped", scarf = True)
+        Cat.objects.create(name = "Muffin", color = "black", fur ="spotted", scarf = True)
+        Cat.objects.create(name = "Ashley", color = "grey", fur ="plain", glasses = True )
+        Cat.objects.create(name = "Jamie", color = "grey", fur ="striped", scarf = True)
+        Cat.objects.create(name = "Diana", color = "grey", fur ="spotted", hat = True)
+        Cat.objects.create(name = "Robel", color = "grey", fur ="plain", scarf = True, hat = True)
+        Cat.objects.create(name = "Jamal", color = "grey", fur ="spotted")
+        Cat.objects.create(name = "Nicu", color = "grey", fur ="striped", scarf = True, glasses = True)
+        Cat.objects.create(name = "John", color = "orange", fur ="plain", glasses = True)
+        Cat.objects.create(name = "Helen", color = "orange", fur ="spotted", hat = True)
+        Cat.objects.create(name = "Sahar", color = "orange", fur ="plain")
+        Cat.objects.create(name = "Pumpkin Spice", color = "orange", fur ="striped")
+        Cat.objects.create(name = "Chelsea", color = "orange", fur ="plain", scarf = True)
+        Cat.objects.create(name = "Pretzel", color = "orange", fur ="striped", glasses = True)
+        Cat.objects.create(name = "Rascal", color = "white", fur ="plain", scarf = True, glasses = True)
+        Cat.objects.create(name = "Macaron", color = "white", fur ="spotted", glasses = True)
+        Cat.objects.create(name = "Arjun", color = "white", fur ="plain")
+        Cat.objects.create(name = "Ember", color = "white", fur ="spotted", scarf = True, hat = True)
+        Cat.objects.create(name = "Kyle", color = "white", fur ="striped", hat = True)
+        Cat.objects.create(name = "Ellie", color = "white", fur ="striped", scarf = True)
+    #RANDOMLY ASSIGN PLAYER AND OPPONENT CHOICES
+    player_choice = Cat.objects.get(id = randint(1,24))
+    opponent_choice = Cat.objects.get(id = randint(1,24))
 
     #CREATING PLAYER AND OPPONENT
     this_player = Player.objects.create(chosencat = player_choice)
@@ -16,18 +42,38 @@ def newgame(request):
 
 
     #CREATING GAMEBOARD FOR PLAYER AND OPPONENT
-    player_board = Board.objects.create(player = request.session['player'])
-    opponent_board = Board.objects.create(player = request.session['opponent'])
+    player_board = Board.objects.create(player = this_player)
+    opponent_board = Board.objects.create(player = this_opponent)
 
 
     #ADDING ALL CATS TO EACH GAME BOARD
-    all_cats = Cats.objects.all()
-    player_board.cats.add(all_cats)
-    opponent_board.cats.add(all_cats)
+    all_cats = Cat.objects.all()
+    for x in range (1,25):
+        player_board.cats.add(x)
+    for x in range (1,25):
+        opponent_board.cats.add(x)
 
     #SETTING SESSION VARIABLES FOR PLAYER, OPPONENT, AND RESPECTIVE GAMEBOARDS
     request.session['player_id'] = this_player.id
     request.session['opponent_id'] = this_opponent.id
     request.session['player_board_id'] = player_board.id
     request.session['opponent_board_id'] = opponent_board.id
+    player_cats = Board.objects.filter(id  = request.session['player_board_id']),
 
+    context = {
+        'player_cats' : Board.objects.get(id  = request.session['player_board_id']),
+        'opponent_cats' : Board.objects.get(id = request.session['opponent_board_id']),
+        'all_cats' : Cat.objects.all()
+    }
+    return render(request, "mew/index.html", context)
+
+def game(request):
+    #submit logic is fur orange
+    player_board_id = request.session['player_board_id']
+    opponent_board_id = request.session['opponent_board_id']
+    context = {
+        'player_cats' : Board.objects.filter(id  = player_board_id),
+        'opponent_cats' : Board.objects.filter(id = opponent_board_id)
+    }
+
+    return render(request, "mew/index.html", context)
