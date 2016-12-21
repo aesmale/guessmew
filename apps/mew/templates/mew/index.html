@@ -4,11 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Google Webfont -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <title>Guess Mew</title>
     {% load staticfiles %}
-        <link rel="stylesheet" href="{% static 'mew/style.css' %}" media="screen" title="no title"  charset="utf-8">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'mew/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
+    <div class="container">
+        <div class="masthead">
+        <h1 class="text-muted">guess mew</h1>
+            <div id="socialmedia">
+                <img src="{% static "mew/images/twitter.png" %}" alt="Twitter" height="30" width="30"/>
+                <img src="{% static "mew/images/facebook.png" %}" alt="Facebook" height="30" width="30"/>
+                <img src="{% static "mew/images/email.png" %}" alt="E-mail us" height="30" width="30"/>
+            </div>
+            <nav>
+                <ul class="nav nav-justified">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#">New Game</a></li>
+                  <li><a href="#">Services</a></li>
+                  <li><a href="#">Downloads</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <div id="container">
         <div id="gameboard">
             <table>
@@ -47,8 +75,26 @@
                     </tr>
                 </tbody>
             </table>
-
+        </div>
+        <div id="guess">
+            <h3>Does your cat have...</h3>
+            <form action="{%url 'mew:guess' %}" method="post">
+            {% csrf_token %}
+                <label><input type="radio" name="option" value="white">White fur?</label>
+                <label><input type="radio" name="option" value="black">Black fur?</label>
+                <label><input type="radio" name="option" value="grey">Grey fur?</label>
+                <label><input type="radio" name="option" value="orange">Orange fur?</label>
+                <label><input type="radio" name="option" value="plain">Plain fur?</label>
+                <label><input type="radio" name="option" value="striped">Striped fur?</label>
+                <label><input type="radio" name="option" value="spotted">Spotted fur?</label>
+                <label><input type="radio" name="option" value="glasses">Glasses?</label>
+                <label><input type="radio" name="option" value="scarf">A scarf?</label>
+                <label><input type="radio" name="option" value="hat">A hat?</label>
+                <p><input type="submit" value="Guess!"></p>
+            </form>
+            <h4>There are *p2.kitty.count Kitties remaining on your opponent's board!</h4>
         </div>
     </div>
+    <h5>made with ♥ by your friends <a href="http://www.github.com/aesmale">amber</a> & <a href="http://www.github.com/allieneko">allie</a> © 2016-2017</h5>
 </body>
 </html>
