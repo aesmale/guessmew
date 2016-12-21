@@ -30,3 +30,4 @@ def newgame(request):
     request.session['opponent_id'] = this_opponent.id
     request.session['player_board_id'] = player_board.id
     request.session['opponent_board_id'] = opponent_board.id
+
