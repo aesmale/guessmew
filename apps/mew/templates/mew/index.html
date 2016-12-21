@@ -42,12 +42,38 @@
             <table>
                 <tbody>
                     <tr>
-                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+
+                        {% if "Kyle" in player_cats.cats %}
+                        <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
+                        {% else %}
+                        <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
+                        {% endif %}
+                        {% if "Griffey" %}
+                        <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
+                        {% else %}
+                        <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
+                        {% endif %}
+                        {% if "Louise" %}
+                        <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
+                        {% else %}
+                        <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
+                        {% endif %}
+                        {% if "Charles" %}
+                        <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
+                        {% else %}
+                        <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
+                        {% endif %}
+                        {% if "Junior" %}
+                        <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
+                        {% else %}
+                        <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
+                        {% endif %}
+                        {% if "Joe" %}
+                        <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
+                        {% else %}
+                        <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
+                        {% endif %}
+
                     </tr>
                     <tr>
                         <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
@@ -77,28 +103,26 @@
             </table>
         </div>
         <div id="right">
-            <div id="guess">
-                <h4>Does your cat have...</h4>
-                <form action="{%url 'mew:index' %}" method="post">
-                {% csrf_token %}
-                    <label><input type="radio" name="option" value="white"> White fur?</label>
-                    <label><input type="radio" name="option" value="black"> Black fur?</label>
-                    <label><input type="radio" name="option" value="grey"> Grey fur?</label>
-                    <label><input type="radio" name="option" value="orange"> Orange fur?</label>
-                    <label><input type="radio" name="option" value="plain"> Plain fur?</label>
-                    <label><input type="radio" name="option" value="striped"> Striped fur?</label>
-                    <label><input type="radio" name="option" value="spotted"> Spotted fur?</label>
-                    <label><input type="radio" name="option" value="glasses"> Glasses?</label>
-                    <label><input type="radio" name="option" value="scarf"> A scarf?</label>
-                    <label><input type="radio" name="option" value="hat"> A hat?</label>
-                    <p><input type="submit" value="Guess!"></p>
-                </form>
-            </div>
-            <div id="player_cat">
-                <div id="description"><h4>You are *p1.cat.name!</h4></div>
-                <img class="catcard" src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
-                <h5>There are *p2.kitty.count Kitties remaining on your opponent's board!</h5>
-            </div>
+        <div id="guess">
+            <h3>Does your cat have...</h3>
+            <form action="{%url 'mew:game' %}" method="post">
+            {% csrf_token %}
+                <label><input type="radio" name="option" value="white">White fur?</label>
+                <label><input type="radio" name="option" value="black">Black fur?</label>
+                <label><input type="radio" name="option" value="grey">Grey fur?</label>
+                <label><input type="radio" name="option" value="orange">Orange fur?</label>
+                <label><input type="radio" name="option" value="plain">Plain fur?</label>
+                <label><input type="radio" name="option" value="striped">Striped fur?</label>
+                <label><input type="radio" name="option" value="spotted">Spotted fur?</label>
+                <label><input type="radio" name="option" value="glasses">Glasses?</label>
+                <label><input type="radio" name="option" value="scarf">A scarf?</label>
+                <label><input type="radio" name="option" value="hat">A hat?</label>
+                <p><input type="submit" value="Guess!"></p>
+            </form>
+            <h4>There are *p2.kitty.count Kitties remaining on your opponent's board!</h4>
+            {% for cat in all_cats %}
+            {{cat.name}}
+            {% endfor %}
         </div>
     </div>
     <h5>made with ♥ by your friends <a href="http://www.github.com/aesmale">amber</a> & <a href="http://www.github.com/allieneko">allie</a> © 2016-2017</h5>
