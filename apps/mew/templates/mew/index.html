@@ -9,7 +9,7 @@
     <title>Guess Mew</title>
     {% load staticfiles %}
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'mew/css/bootstrap.min.css' %}" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'mew/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -29,8 +29,8 @@
                 <ul class="nav nav-justified">
                   <li class="active"><a href="#">Home</a></li>
                   <li><a href="#">New Game</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">Downloads</a></li>
+                  <li><a href="#">What Goes Here?</a></li>
+                  <li><a href="#">It's a Mystery!</a></li>
                   <li><a href="#">About</a></li>
                   <li><a href="#">Contact</a></li>
                 </ul>
@@ -42,6 +42,7 @@
             <table>
                 <tbody>
                     <tr>
+
                         {% if "Kyle" in player_cats.cats %}
                         <td class="catcard"><img src="cat1.jpg" alt="here" height="100" width="100"></td>
                         {% else %}
@@ -72,34 +73,36 @@
                         {% else %}
                         <td class="catcard"><img src="cat1.jpg" alt="not here" height="100" width="100"></td>
                         {% endif %}
+
                     </tr>
                     <tr>
-                        <td class="catcard"><img src="cat7.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat8.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat9.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat10.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat11.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat12.jpg" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
                     </tr>
                     <tr>
-                        <td class="catcard"><img src="cat13.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat14.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat15.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat16.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat17.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat18.jpg" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
                     </tr>
                     <tr>
-                        <td class="catcard"><img src="cat19.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat20.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat21.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat22.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat23.jpg" alt="cat" height="100" width="100"></td>
-                        <td class="catcard"><img src="cat24.jpg" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
+                        <td class="catcard"><img src="{% static "mew/images/cat1.jpg" %}" alt="cat" height="100" width="100"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div id="right">
         <div id="guess">
             <h3>Does your cat have...</h3>
             <form action="{%url 'mew:game' %}" method="post">
