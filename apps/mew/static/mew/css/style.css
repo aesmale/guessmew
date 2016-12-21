@@ -24,7 +24,6 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
   background-repeat: repeat-x; /* Repeat the gradient */
   border-bottom: 1px solid #d5d5d5;
-  display: inline-block;
 }
 .nav-justified > .active > a,
 .nav-justified > .active > a:hover,
@@ -78,21 +77,50 @@ h5 {
     }
 
     .catcard {
-        padding: 10px;
+        padding: 8px;
+        margin: auto;
+        border: 2px solid white;
+        background-color: white;
         margin: auto;
     }
 
-#guess {
-    width: 200px;
-    padding: 10px;
+#right {
+    width: 250px;
+    padding: 5px;
     margin: auto;
     display: inline-block;
     vertical-align: top;
     align: right;
     position: absolute;
     right: 15%;
-}
-
-    label {
-        display: block;
     }
+
+    #guess {
+        width: 200px;
+        margin: auto;
+        display: inline-block;
+        vertical-align: top;
+        align: right;
+        position: absolute;
+        right: 20%;
+    }
+
+        label {
+            display: block;
+        }
+
+
+    #player_cat {
+        vertical-align: top;
+        display: inline-block;
+        margin: auto;
+        position: relative;
+        text-align: center;
+    }
+
+        #player_cat .catcard {
+            vertical-align: top;
+            display: inline-block;
+            margin: auto;
+            position: relative;
+        }
