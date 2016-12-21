@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from .models import Cat, Player, Board
 from random import randint
 from .models import Player, Cat, Board
 import itertools
 
 
 # Create your views here.
+
 def newgame(request):
     request.session.flush()
     Player.objects.all().delete()
@@ -59,6 +61,7 @@ def newgame(request):
     request.session['opponent_id'] = this_opponent.id
     request.session['player_board_id'] = player_board.id
     request.session['opponent_board_id'] = opponent_board.id
+
     player_cats = Board.objects.filter(id  = request.session['player_board_id']),
 
     context = {
@@ -82,3 +85,4 @@ def game(request):
     }
 
     return render(request, "mew/index.html", context)
+
