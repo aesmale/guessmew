@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from random import randint
 from .models import Player, Cat, Board
+import itertools
+
 
 # Create your views here.
 def newgame(request):
@@ -45,13 +47,12 @@ def newgame(request):
     player_board = Board.objects.create(player = this_player)
     opponent_board = Board.objects.create(player = this_opponent)
 
-
     #ADDING ALL CATS TO EACH GAME BOARD
     all_cats = Cat.objects.all()
-    for x in range (1,25):
-        player_board.cats.add(x)
-    for x in range (1,25):
-        opponent_board.cats.add(x)
+    for cat in all_cats:
+        cat.board.add(player_board)
+    for cat in all_cats:
+        cat.board.add(opponent_board)
 
     #SETTING SESSION VARIABLES FOR PLAYER, OPPONENT, AND RESPECTIVE GAMEBOARDS
     request.session['player_id'] = this_player.id
@@ -61,19 +62,23 @@ def newgame(request):
     player_cats = Board.objects.filter(id  = request.session['player_board_id']),
 
     context = {
-        'player_cats' : Board.objects.get(id  = request.session['player_board_id']),
-        'opponent_cats' : Board.objects.get(id = request.session['opponent_board_id']),
+        'player_cats' : Cat.objects.filter(board__player  = this_player).values_list('id', flat = True),
+        'opponent_cats' : Cat.objects.filter(board__player = this_opponent).values_list('id', flat = True),
         'all_cats' : Cat.objects.all()
     }
+    print context['player_cats']
+    print context['opponent_cats']
     return render(request, "mew/index.html", context)
 
 def game(request):
     #submit logic is fur orange
     player_board_id = request.session['player_board_id']
     opponent_board_id = request.session['opponent_board_id']
+    this_player = Player.objects.get(id = request.session['player_id'])
+    this_opponent = Player.objects.get(id = request.session['opponent_id'])
     context = {
-        'player_cats' : Board.objects.filter(id  = player_board_id),
-        'opponent_cats' : Board.objects.filter(id = opponent_board_id)
+        'player_cats' : Cat.objects.filter(board__player  = this_player),
+        'opponent_cats' : Cat.objects.filter(board__player = this_opponent)
     }
 
     return render(request, "mew/index.html", context)
