@@ -6,7 +6,8 @@ import itertools
 
 # Create your views here.
 def newgame(request):
-    request.session.flush()
+    if "player_id" in request.session:
+        request.session.flush()
     Player.objects.all().delete()
     Board.objects.all().delete()
     if not Cat.objects.filter(name = "Kyle").exists():
@@ -72,6 +73,30 @@ def newgame(request):
 
 def game(request):
     #submit logic is fur orange
+    if request.method == POST:
+        if request.POST['name'] == "white":
+            these_cats = Cat.objects.filter(color = "white")
+        elif request.POST['name'] == "black":
+            these_cats = Cat.objects.filter(color = "black")
+        elif request.POST['name'] == "grey":
+            these_cats = Cat.objects.filter(color = "grey")
+        elif request.POST['name'] == "orange":
+            these_cats = Cat.objects.filter(color = "orange")
+        elif request.POST['name'] == "plain":
+            these_cats = Cat.objects.filter(fur = "plain")
+        elif request.POST['name'] == "striped":
+            these_cats = Cat.objects.filter(fur = "striped")
+        elif request.POST['name'] == "spotted":
+            these_cats = Cat.objects.filter(fur = "spotted")
+        elif request.POST['name'] == "glasses":
+            these_cats = Cat.objects.filter(glasses = True)
+        elif request.POST['name'] == "scarf":
+            these_cats = Cat.objects.filter(scarf = True)
+        elif request.POST['name'] == "hat":
+            these_cats = Cat.objects.filter(hat = True)
+        if request.POST['name'] == "white" or request.POST['name'] == "grey" or request.POST['name'] == "black" or request.POST['name'] == "orange":
+            print "something"
+
     player_board_id = request.session['player_board_id']
     opponent_board_id = request.session['opponent_board_id']
     this_player = Player.objects.get(id = request.session['player_id'])
