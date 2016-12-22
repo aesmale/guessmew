@@ -39,6 +39,11 @@
     </div>
     <div id="container">
         <div id="gameboard">
+          {% if messages %}
+          {% for message in messages %}
+          <h2>{{message}}</h2>
+          {% endfor %}
+          {% endif %}
             <table>
                 <tbody>
                     <tr>
@@ -189,7 +194,8 @@
                     <label><input type="radio" name="option" value="hat"> A hat?</label>
                     <p><input type="submit" value="Guess!"></p>
                 </form>
-                <h4>There are *p2.kitty.count Kitties remaining on your opponent's board!</h4>
+                <h2>Your kitty is {{player.chosencat.name}}</h2>
+                <h4>There are {{opponent_cats.count}} Kitties remaining on your opponent's board! They're kitty is {{opponent.chosencat.name}}</h4>
                 {% for cat in all_cats %}
                 {{cat.name}}
                 {% endfor %}
