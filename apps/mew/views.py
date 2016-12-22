@@ -16,12 +16,12 @@ def newgame(request):
         Cat.objects.create(name = "Griffey", color = "black", fur ="plain", hat = True)
         Cat.objects.create(name = "Louise", color = "black", fur ="striped", glasses = True)
         Cat.objects.create(name = "Charles", color = "black", fur ="spotted")
-        Cat.objects.create(name = "Junior", color = "black", fur ="striped", scarf = True)
+        Cat.objects.create(name = "Robel", color = "black", fur ="striped", scarf = True)
         Cat.objects.create(name = "Muffin", color = "black", fur ="spotted", scarf = True)
         Cat.objects.create(name = "Ashley", color = "grey", fur ="plain", glasses = True )
         Cat.objects.create(name = "Jamie", color = "grey", fur ="striped", scarf = True)
         Cat.objects.create(name = "Diana", color = "grey", fur ="spotted", hat = True)
-        Cat.objects.create(name = "Robel", color = "grey", fur ="plain", scarf = True, hat = True)
+        Cat.objects.create(name = "Sean", color = "grey", fur ="plain", scarf = True, hat = True)
         Cat.objects.create(name = "Jamal", color = "grey", fur ="spotted")
         Cat.objects.create(name = "Nicu", color = "grey", fur ="striped", scarf = True, glasses = True)
         Cat.objects.create(name = "John", color = "orange", fur ="plain", glasses = True)
@@ -87,52 +87,52 @@ def game(request):
     if request.method == "POST":
 #DEPENDING ON THE POST, FILTER THE CATS BASED ON OPPONENTS CHOSENCAT
         if request.POST['option'] == "white":
-            if this_opponent.chosencat.color == request.POST['option']:
+            if this_opponent.chosencat.color != request.POST['option']:
                 these_cats = Cat.objects.filter(color = "white")
             else:
                 these_cats = Cat.objects.all().exclude(color = "white")
         elif request.POST['option'] == "black":
-            if this_opponent.chosencat.color == request.POST['option']:
+            if this_opponent.chosencat.color != request.POST['option']:
                 these_cats = Cat.objects.filter(color = "black")
             else:
                 these_cats = Cat.objects.all().exclude(color = "black")
         elif request.POST['option'] == "grey":
-            if this_opponent.chosencat.color == request.POST['option']:
+            if this_opponent.chosencat.color != request.POST['option']:
                 these_cats = Cat.objects.filter(color = "grey")
             else:
                 these_cats = Cat.objects.all().exclude(color = "grey")
         elif request.POST['option'] == "orange":
-            if this_opponent.chosencat.color == request.POST['option']:
+            if this_opponent.chosencat.color != request.POST['option']:
                 these_cats = Cat.objects.filter(color = "orange")
             else:
                 these_cats = Cat.objects.all().exclude(color = "orange")
         elif request.POST['option'] == "plain":
-            if this_opponent.chosencat.fur == request.POST['option']:
+            if this_opponent.chosencat.fur != request.POST['option']:
                 these_cats = Cat.objects.filter(fur = "plain")
             else:
                 these_cats = Cat.objects.all().exclude(fur = "plain")
         elif request.POST['option'] == "striped":
-            if this_opponent.chosencat.fur == request.POST['option']:
+            if this_opponent.chosencat.fur != request.POST['option']:
                 these_cats = Cat.objects.filter(fur = "striped")
             else:
                 these_cats = Cat.objects.all().exclude(fur = "striped")
         elif request.POST['option'] == "spotted":
-            if this_opponent.chosencat.fur == request.POST['option']:
+            if this_opponent.chosencat.fur != request.POST['option']:
                 these_cats = Cat.objects.filter(fur = "spotted")
             else:
                 these_cats = Cat.objects.all().exclude(fur = "spotted")
         elif request.POST['option'] == "glasses":
-            if this_opponent.chosencat.glasses == True:
+            if this_opponent.chosencat.glasses != True:
                 these_cats = Cat.objects.all().exclude(glasses = False)
             else:
                 these_cats = Cat.objects.all().exclude(glasses = True)
         elif request.POST['option'] == "scarf":
-            if this_opponent.chosencat.scarf == True:
+            if this_opponent.chosencat.scarf != True:
                 these_cats = Cat.objects.all().exclude(scarf = False)
             else:
                 these_cats = Cat.objects.all().exclude(scarf = True)
         elif request.POST['option'] == "hat":
-            if this_opponent.chosencat.hat == True:
+            if this_opponent.chosencat.hat != True:
                 these_cats = Cat.objects.all().exclude(hat = False)
             else:
                 these_cats = Cat.objects.all().exclude(hat = True)
@@ -151,95 +151,80 @@ def game(request):
             print each
 
 #REMOVING REDUNDANT OPTIONS BASED ON ? PICKED
-        if opponent_question == "white":
+        if opponent_question == "white" or opponent_question == "black"  or opponent_question == "grey" or opponent_question == "orange":
             request.session['questions'].remove('black')
             request.session['questions'].remove('grey')
             request.session['questions'].remove('orange')
-        if opponent_question == "black":
             request.session['questions'].remove('white')
-            request.session['questions'].remove('grey')
-            request.session['questions'].remove('orange')
-        if opponent_question == "grey":
-            request.session['questions'].remove('white')
-            request.session['questions'].remove('black')
-            request.session['questions'].remove('orange')
-        if opponent_question == "orange":
-            request.session['questions'].remove('white')
-            request.session['questions'].remove('black')
-            request.session['questions'].remove('grey')
-        if opponent_question == "spotted":
+        elif opponent_question == "spotted" or opponent_question == "plain" or opponent_question == "striped":
             request.session['questions'].remove('plain')
             request.session['questions'].remove('striped')
-        if opponent_question == "plain":
             request.session['questions'].remove('spotted')
-            request.session['questions'].remove('striped')
-        if opponent_question == "striped":
-            request.session['questions'].remove('spotted')
-            request.session['questions'].remove('plain')
+        elif opponent_question == "hat":
+            request.session['questions'].remove('hat')
+        elif opponent_question == "scarf":
+            request.session['questions'].remove('scarf')
+        elif opponent_question == "glasses":
+            request.session['questions'].remove('glasses')
 
-#REMOVING ? PICKED FROM LIST TO PREVENT REPEATS
-        for question in request.session['questions']:
-            if question == opponent_question:
-                print question
-                request.session['questions'].remove(question)
 #DEPENDING ON THE ???, FILTER THE CATS BASED ON PLAYERS CHOSENCAT, SET MESSAGES FOR PLAYER
-        if question == "white":
+        if opponent_question == "white":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty was white')
-            if this_player.chosencat.color == question:
+            if this_player.chosencat.color != question:
                 these_cats = Cat.objects.filter(color = "white")
             else:
                 these_cats = Cat.objects.all().exclude(color = "white")
-        elif question == "black":
+        elif opponent_question == "black":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty was black')
-            if this_player.chosencat.color == question:
+            if this_player.chosencat.color != question:
                 these_cats = Cat.objects.filter(color = "black")
             else:
                 these_cats = Cat.objects.all().exclude(color = "black")
-        elif question == "grey":
+        elif opponent_question == "grey":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty was grey')
-            if this_player.chosencat.color == question:
+            if this_player.chosencat.color != question:
                 these_cats = Cat.objects.filter(color = "grey")
             else:
                 these_cats = Cat.objects.all().exclude(color = "grey")
-        elif question == "orange":
+        elif opponent_question == "orange":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty was orange')
-            if this_player.chosencat.color == question:
+            if this_player.chosencat.color != question:
                 these_cats = Cat.objects.filter(color = "orange")
             else:
                 these_cats = Cat.objects.all().exclude(color = "orange")
-        elif question == "plain":
+        elif opponent_question == "plain":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty has plain fur')
-            if this_player.chosencat.fur == question:
+            if this_player.chosencat.fur != question:
                 these_cats = Cat.objects.filter(fur = "plain")
             else:
                 these_cats = Cat.objects.all().exclude(fur = "plain")
-        elif question == "striped":
+        elif opponent_question == "striped":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty has striped fur')
-            if this_player.chosencat.fur == question:
+            if this_player.chosencat.fur != question:
                 these_cats = Cat.objects.filter(fur = "striped")
             else:
                 these_cats = Cat.objects.all().exclude(fur = "striped")
-        elif question == "spotted":
+        elif opponent_question == "spotted":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty has spotted fur')
-            if this_player.chosencat.fur == question:
+            if this_player.chosencat.fur != question:
                 these_cats = Cat.objects.filter(fur = "spotted")
             else:
                 these_cats = Cat.objects.all().exclude(fur = "spotted")
-        elif question == "glasses":
+        elif opponent_question == "glasses":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty is wearing glasses')
-            if this_player.chosencat.glasses == True:
+            if this_player.chosencat.glasses != True:
                 these_cats = Cat.objects.all().exclude(glasses = False)
             else:
                 these_cats = Cat.objects.all().exclude(glasses = True)
-        elif question == "scarf":
+        elif opponent_question == "scarf":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty is wearing a scarf')
-            if this_player.chosencat.scarf == True:
+            if this_player.chosencat.scarf != True:
                 these_cats = Cat.objects.all().exclude(scarf = False)
             else:
                 these_cats = Cat.objects.all().exclude(scarf = True)
-        elif question == "hat":
+        elif opponent_question == "hat":
             messages.add_message(request, messages.INFO, 'Opponent asked if your kitty is wearing a hat')
-            if this_player.chosencat.hat == True:
+            if this_player.chosencat.hat != True:
                 these_cats = Cat.objects.all().exclude(hat = False)
             else:
                 these_cats = Cat.objects.all().exclude(hat = True)
